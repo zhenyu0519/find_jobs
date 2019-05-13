@@ -17,7 +17,7 @@ export default function createReducer(injectedReducers = {}) {
     language: languageProviderReducer,
     router: connectRouter(history),
     ...injectedReducers,
-    weather: fetchWeatherReducer
+    data: fetchWeatherReducer
   });
 
   return rootReducer;
