@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchWeatherAction } from '../actions/fetchWeatherActions'
+import { fetchWeatherAction } from '../actions/fetchWeatherActions';
+
+//import component
+import SearchBar from './SearchBar'
 
 //import lodash
 const _ = require('lodash');
@@ -29,10 +32,22 @@ class Weather extends Component {
             icon: '',//icon for weather
             windDeg: 0,//wind degree
             windSpeed: 0,//wind speed
+
+            //init the search bar state
+            cityName: '',
         }
     }
-    componentDidMount() {
-        this.props.fetchWeatherAction();
+
+    handleCityNameOnChange = (event) => {
+        this.setState({
+            cityName: event.target.value
+        })
+    }
+
+    //submit the city name
+    handleSubmitCityName = (event) => {
+        event.preventDefault();
+        this.props.fetchWeatherAction(this.state.cityName)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -62,7 +77,11 @@ class Weather extends Component {
     render() {
         return (
             <div>
-                {this.state.main.temp}
+                <SearchBar
+                    value={this.state.cityName}
+                    handleChange={this.handleCityNameOnChange}
+                    handleSubmit={this.handleSubmitCityName}
+                />
             </div>
         )
     }

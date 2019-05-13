@@ -21,11 +21,12 @@ export const fetchWeatherErr = (error) => {
     }
 }
 
-export const fetchWeatherAction = () => {
+export const fetchWeatherAction = (param) => {
     console.log('fetch.....')
+    console.log('param is ', param)
     return function (dispatch) {
         dispatch(fetchWeatherReq());
-        return axios.get("http://api.openweathermap.org/data/2.5/weather?q=Vancouver,ca&appid=ac7d0a07fdc70b3fd4906ceb2e8032af").then(function (results) {
+        return axios.get("http://api.openweathermap.org/data/2.5/weather?q="+param+"&appid=ac7d0a07fdc70b3fd4906ceb2e8032af").then(function (results) {
             dispatch(fetchWeatherOk(results.data));
         }).catch(function (error) {
             dispatch(fetchWeatherErr(error))
