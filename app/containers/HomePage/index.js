@@ -8,11 +8,15 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import Weather from '../../components/Weather'
 
 export default function HomePage() {
   return (
+    <React.Fragment>
     <h1>
       <FormattedMessage {...messages.header} />
     </h1>
-  );
-}
+    <Weather />
+    </React.Fragment>
+    );
+  }
