@@ -36,51 +36,80 @@ class Weather extends Component {
 
             //init the search bar state
             cityName: '',
+            countryCode: '',
             cityOption: {},
-            rawData: [[]]
+            rawData: [[]],
+            disableCountryCode: true
         }
     }
-
-
-
 
 
     handleCityNameOnChange = (event) => {
         this.state.cityName = event.target.value
         this.setState({
-            cityName: event.target.value
+            cityName: this.state.cityName,
+            disableCountryCode: false,
+        })
+    }
+
+    handleContryCodeOnChange = (event) => {
+        this.state.countryCode = event.target.value
+        this.setState({
+            countryCode: event.target.value
         })
     }
 
     //submit the city name
     handleSubmitCityName = (event) => {
+        let cityName = this.state.cityName;
+        cityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
+        let countryCode = this.state.countryCode;
+        countryCode = countryCode.toUpperCase();
         event.preventDefault();
-        this.props.fetchWeatherAction(this.state.cityName)
+        if (this.state.countryCode !== '') {
+            this.props.fetchWeatherAction(cityName + ',' + countryCode)
+        } else {
+            this.props.fetchWeatherAction(cityName)
+        }
+
     }
 
     componentWillReceiveProps(nextProps) {
         try {
             if (!_.isEqual(nextProps.weather, this.props.weather)) {
-                let cityOptionKey = nextProps.weather.name;
-                let cityOption = {
-                    [cityOptionKey]: Object.values(nextProps.weather.coord),
-                    coord: nextProps.weather.coord,
-                    dt: nextProps.weather.dt,
-                    name: nextProps.weather.name,
-                    desc: nextProps.weather.weather[0].description,
-                    visibility: nextProps.weather.visibility,
-                    clouds: nextProps.weather.clouds,
-                    main: nextProps.weather.main,
-                    sunrise: nextProps.weather.sys.sunrise,
-                    sunset: nextProps.weather.sys.sunset,
-                    icon: nextProps.weather.weather[0].icon,
-                };
-                let rawData = [nextProps.weather.name, "wind"]
-                this.setState({
-                    cityOption: cityOption,
-                    rawData: rawData,
-                    name: nextProps.weather.name,
-                })
+                if (nextProps.weather.response.data.cod == 404) {
+                    alert('City Not Found!')
+                    this.setState({
+                        cityName: '',
+                        countryCode: '',
+                        cityOption: {},
+                        rawData: [[]],
+                        disableCountryCode: true
+                    })
+                    return
+                } else {
+                    let cityOptionKey = nextProps.weather.name;
+                    let cityOption = {
+                        [cityOptionKey]: Object.values(nextProps.weather.coord),
+                        coord: nextProps.weather.coord,
+                        dt: nextProps.weather.dt,
+                        name: nextProps.weather.name,
+                        desc: nextProps.weather.weather[0].description,
+                        visibility: nextProps.weather.visibility,
+                        clouds: nextProps.weather.clouds,
+                        main: nextProps.weather.main,
+                        sunrise: nextProps.weather.sys.sunrise,
+                        sunset: nextProps.weather.sys.sunset,
+                        icon: nextProps.weather.weather[0].icon,
+                    };
+                    let rawData = [nextProps.weather.name]
+                    this.setState({
+                        cityOption: cityOption,
+                        rawData: rawData,
+                        name: nextProps.weather.name,
+                    })
+                }
+
             }
         } catch (e) {
             return
@@ -89,16 +118,23 @@ class Weather extends Component {
 
     render() {
         return (
-            <div>
-                <SearchBar
-                    value={this.state.cityName}
-                    handleChange={this.handleCityNameOnChange}
-                    handleSubmit={this.handleSubmitCityName}
-                />
-                <WorldMap
-                    geoCoordMap={this.state.cityOption}
-                    rawData={this.state.rawData}
-                    name={this.state.name === '' ? 'No Location' : this.state.name} />
+            <div className='container'>
+                <div className='row'>
+                    <SearchBar
+                        city={this.state.cityName}
+                        province={this.state.countryCode}
+                        handleCityChange={this.handleCityNameOnChange}
+                        handleCountryCodeChange={this.handleContryCodeOnChange}
+                        handleSubmit={this.handleSubmitCityName}
+                        disableCountryCode={this.state.disableCountryCode}
+                    />
+                </div>
+                <div className='row'>
+                    <WorldMap
+                        geoCoordMap={this.state.cityOption}
+                        rawData={this.state.rawData}
+                        name={this.state.name === '' ? 'No Location' : this.state.name} />
+                </div>
             </div>
         )
     }

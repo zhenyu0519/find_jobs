@@ -22,12 +22,9 @@ class WorldMap extends Component {
     }
 
     makeMapData(rawData, geoCoordMap) {
-        console.log('geoCoordMap: ', geoCoordMap)
-        console.log('rawData: ',rawData)
         let mapData = [];
         for (let i = 0; i < rawData.length; i++) {
             let geoCoord = geoCoordMap[rawData[i]];
-            console.log('geoCo is ', geoCoord)
             if (geoCoord) {
                 mapData.push({
                     name: rawData[i],
@@ -35,7 +32,6 @@ class WorldMap extends Component {
                 });
             }
         }
-        console.log('ok',mapData)
         return mapData;
     }
 
@@ -74,7 +70,6 @@ class WorldMap extends Component {
             tooltip: {
                 trigger: 'item',
                 formatter: function (params) {
-                    console.log('params is ', params)
                     let value = (params.value + '').split('.');
                     value = value[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, '$1,') + '.' + value[1];
                     return params.seriesName + '<br/>' + params.name + ' : ' + value;
@@ -99,14 +94,15 @@ class WorldMap extends Component {
                 top: '10%',
                 bottom: '5%',
                 right: '10%',
-                roam: true
+                roam: false
             },
             series: [
                 {
                     name: 'The current weather of ' + name,
-                    type: 'scatter',
+                    type: 'effectScatter',
                     coordinateSystem: 'geo',
-                    symbolSize: 15,
+                    symbolSize: 30,
+                    symbol: 'image://http://openweathermap.org/img/w/' + geoCoordMap.icon + '.png',
                     data: this.makeMapData(rawData, geoCoordMap),
                     activeOpacity: 1,
                     label: {
@@ -117,6 +113,21 @@ class WorldMap extends Component {
                         },
                         emphasis: {
                             show: true
+                        }
+                    },
+                    tooltip: {
+                        formatter: function (param) {
+                            return [
+                                'City: ' + name + '<hr size=1 style="margin: 3px 0">',
+                                'Desc: ' + geoCoordMap.desc + '<br/>',
+                                'Current Temp: ' + geoCoordMap.main.temp + ' (&#8451) <br/>',
+                                'Min Temp: ' + geoCoordMap.main.temp_min + '(&#8451) <br/>',
+                                'Max Temp: ' + geoCoordMap.main.temp_max + '(&#8451) <br/>',
+                                'Humidity: ' + geoCoordMap.main.humidity + '% <br/>',
+                                'Pressure: ' + geoCoordMap.main.pressure + '(Pa) <br/>',
+                                'Sunrise:' + new Date(geoCoordMap.sunrise * 1000) + '<br/>',
+                                'Sunset:' + new Date(geoCoordMap.sunset * 1000) + '<br/>',
+                            ].join('');
                         }
                     },
                     symbolSize: 10,
