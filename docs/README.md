@@ -32,11 +32,4 @@ Run `npm run build`, which will compile all the necessary files to the
 ### Structure
 
 The [`app/`](../../../tree/master/app) directory contains your entire application code, including CSS,
-JavaScript, HTML and tests.
-
-The rest of the folders and files only exist to make your life easier, and
-should not need to be touched.
-
-_(If they do have to be changed, please [submit an issue](https://github.com/react-boilerplate/react-boilerplate/issues)!)_
-
-
+JavaScript and HTML.
