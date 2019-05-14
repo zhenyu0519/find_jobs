@@ -2,6 +2,9 @@
 
 ## Overview
 
+### Preview
+![Weather_App_Preview](https://user-images.githubusercontent.com/17155493/57714509-7fb7cf00-7629-11e9-8c56-8facd5f1842a.png)
+
 ### Intro
 This is a React/Redux Single Page Application. The app is to show the local weather condition of input city on the map. I used Echartjs to do the data visualization. [openweathermap](https://openweathermap.org/current) offer various free APIs for weather conditions.
 
