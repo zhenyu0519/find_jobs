@@ -77,7 +77,7 @@ class Weather extends Component {
     componentWillReceiveProps(nextProps) {
         try {
             if (!_.isEqual(nextProps.weather, this.props.weather)) {
-                if (nextProps.weather.response.data.cod == 404) {
+                if (nextProps.weather.response && nextProps.weather.response.data.cod == 404) {
                     alert('City Not Found!')
                     this.setState({
                         cityName: '',
