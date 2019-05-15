@@ -17,6 +17,9 @@ This is a React/Redux Single Page Application. The app is to show the local weat
     git clone https://github.com/zhenyu0519/weather_app.git
     ```
     ```Shell
+    npm install
+    ```
+    ```Shell
     npm run start
     ```
 
