@@ -159,9 +159,14 @@ class WorldMap extends Component {
 
     render() {
         return (
-            <ReactEcharts
+            <ReactEcharts className="world-map"
                 id="region"
-                style={{ 'height': '500px' }}
+                style={{
+                    'margin':'0 auto',
+                    'width': '100%',
+                    'maxWidth': '1000px',
+                    'min-height': '300px',
+                }}
                 option={this.state.regionOption}>
             </ReactEcharts>
         )

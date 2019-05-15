@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 class SearchBar extends Component {
     render() {
         return (
-            <form onSubmit={this.props.handleSubmit} style={{ display: 'inline-block' }} className="form-inline">
-                <label>
+            <form onSubmit={this.props.handleSubmit} className="form-search">
+                <label >
                     City:
                 <input type="text" placeholder='Enter City Name' value={this.props.city} onChange={this.props.handleCityChange} />
                 </label>
-                <label>
+                <label >
                     Country Code:
                 <input disabled={this.props.disableProvince} placeholder={this.props.disableCountryCode ? 'Enter City First!' : 'Enter Country Code'} type="text" value={this.props.province} onChange={this.props.handleCountryCodeChange} />
                 </label>

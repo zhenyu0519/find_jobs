@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    text-align: center
+    text-align: center;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
@@ -32,36 +32,74 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.5em;
   }
 
-  .form-inline { 
-    display: flex;
+  // search bar form
+  .form-search { 
+    display: inline-block;
     flex-flow: row wrap;
-    align-items: center;
+    margin: 0 auto
   }
 
-  .form-inline input[type=button], input[type=submit], input[type=reset] {
-    background-color: #006994;
-    border: none;
-    color: white;
-    padding: 8px 20px;
-    text-decoration: none;
-    margin: 4px 2px;
+  .form-search label {
+    font-family: Georgia, Times, 'Times New Roman', serif;
+    line-height: 1.2em;
+    color: #006994;
   }
 
-  .form-inline input[type=text] {
+  .form-search input[type=text] {
     padding: 5px 20px;
     text-decoration: none;
     margin: 4px 10px;
   }
 
+  .form-search input[type=submit] {
+    background-color: #006994;
+    border: none;
+    color: white;
+    padding: 7px 20px;
+    text-decoration: none;
+    margin: 4px 2px;
+  }
 
-  @media (max-width: 500px) {
-    .form-inline input {
-      margin: 10px 0;
+  //world map chart
+
+
+  @media only screen and (max-width: 414px) {
+    body {
+      text-align: center;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
-    
-    .form-inline {
-      flex-direction: column;
-      align-items: stretch;
+
+    .form-search { 
+      display: flex;
+      align-items: flex-start;
+    }
+  
+    .form-search label {
+      font-family: Georgia, Times, 'Times New Roman', serif;
+      line-height: 1.5em;
+      margin-left: 10px;
+      color: #006994;
+      width: 100%;
+      float: left;
+      text-align: left;
+      display: inline-block;
+    }
+
+    .form-search input[type=text] {
+      display: inline-block;
+      text-align: left;
+      text-decoration: none;
+    }
+
+    .form-search input[type=submit] {
+      background-color: #006994;
+      border: none;
+      color: white;
+      padding: 7px 20px;
+      margin-bottom: 10px;
+      display: block;
+      width: 100%;
+      float: left;
     }
   }
 `;
